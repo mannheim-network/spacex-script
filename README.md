@@ -31,7 +31,7 @@ sudo spacex config set
 - Please make sure the following ports are not occupied before starting：
   - 30888 19933 19944 (for spacex chain)
   - 56666 (for spacex API)
-  - 12222 (for spacex sWorker)
+  - 12222 (for spacex storage)
   - 5001 4001 37773 (for IPFS)
 
 ```shell
