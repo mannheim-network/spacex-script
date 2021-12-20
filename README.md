@@ -1,5 +1,5 @@
 # Spacex node
-Official spacex node service for running **Mannheim** protocol.
+Official spacex node service for running Mannheim protocol.
 
 ## Preparation work
 - Hardware requirements: 
