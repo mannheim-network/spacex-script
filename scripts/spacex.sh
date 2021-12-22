@@ -48,7 +48,7 @@ start()
             exit 1
         fi
 
-        start_smanager
+        start_sfrontend
         if [ $? -ne 0 ]; then
             docker-compose -f $composeyaml down
             exit 1
@@ -224,6 +224,200 @@ stop_chain()
         log_info "Stopping spacex chain service"
         docker stop spacex &>/dev/null
         docker rm spacex &>/dev/null
+    fi
+    return 0
+}
+
+
+### start storage ###
+start_storage()
+{
+    if [ ! -f "$composeyaml" ]; then
+        log_err "No configuration file, please set config"
+        return 1
+    fi
+
+    if [ -d "$builddir/storage" ]; then
+        local a_or_b=`cat $basedir/etc/storage.ab`
+        check_docker_status spacex-storage-$a_or_b
+        if [ $? -eq 0 ]; then
+            return 0
+        fi
+
+        check_port 12222
+        if [ $? -ne 0 ]; then
+            return 1
+        fi
+
+        if [ -f "$scriptdir/install_sgx.sh" ]; then
+            $scriptdir/install_sgx.sh
+            if [ $? -ne 0 ]; then
+                log_err "Install sgx dirver failed"
+                return 1
+            fi
+        fi
+
+        if [ ! -e "/dev/isgx" ]; then
+            log_err "Your device can't install sgx dirver, please check your CPU and BIOS to determine if they support SGX."
+            return 1
+        fi
+        EX_STORAGE_ARGS=$@ docker-compose -f $composeyaml up -d spacex-storage-$a_or_b
+        if [ $? -ne 0 ]; then
+            log_err "Start spacex-storage-$a_or_b failed"
+            return 1
+        fi
+    fi
+    return 0
+}
+
+stop_storage()
+{
+    check_docker_status spacex-storage-a
+    if [ $? -ne 1 ]; then
+        log_info "Stopping spacex storage A service"
+        docker stop spacex-storage-a &>/dev/null
+        docker rm spacex-storage-a &>/dev/null
+    fi
+
+    check_docker_status spacex-storage-b
+    if [ $? -ne 1 ]; then
+        log_info "Stopping spacex storage B service"
+        docker stop spacex-storage-b &>/dev/null
+        docker rm spacex-storage-b &>/dev/null
+    fi
+
+    return 0
+}
+
+start_api()
+{
+    if [ ! -f "$composeyaml" ]; then
+        log_err "No configuration file, please set config"
+        return 1
+    fi
+
+    if [ -d "$builddir/storage" ]; then
+        check_docker_status spacex-api
+        if [ $? -eq 0 ]; then
+            return 0
+        fi
+
+        check_port 56666
+        if [ $? -ne 0 ]; then
+            return 1
+        fi
+
+        docker-compose -f $composeyaml up -d spacex-api
+        if [ $? -ne 0 ]; then
+            log_err "Start spacex-api failed"
+            return 1
+        fi
+    fi
+    return 0
+}
+
+stop_api()
+{
+    check_docker_status spacex-api
+    if [ $? -ne 1 ]; then
+        log_info "Stopping spacex API service"
+        docker stop spacex-api &>/dev/null
+        docker rm spacex-api &>/dev/null
+    fi
+    return 0
+}
+
+start_sfrontend()
+{
+    if [ ! -f "$composeyaml" ]; then
+        log_err "No configuration file, please set config"
+        return 1
+    fi
+
+    if [ -d "$builddir/sfrontend" ]; then
+        check_docker_status spacex-sfrontend
+        if [ $? -eq 0 ]; then
+            return 0
+        fi
+
+        docker-compose -f $composeyaml up -d spacex-sfrontend
+        if [ $? -ne 0 ]; then
+            log_err "Start spacex-sfrontend failed"
+            return 1
+        fi
+
+        local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_sfrontend.sh" | grep -v grep | awk '{print $2}')
+        if [ x"$upgrade_pid" != x"" ]; then
+            kill -9 $upgrade_pid
+        fi
+
+        if [ -f "$scriptdir/auto_sfrontend.sh" ]; then
+            nohup $scriptdir/auto_sfrontend.sh &>$basedir/auto_sfrontend.log &
+            if [ $? -ne 0 ]; then
+                log_err "Start spacex-sfrontend upgrade failed"
+                return 1
+            fi
+        fi
+    fi
+    return 0
+}
+
+stop_sfrontend()
+{
+    local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_stop_sfrontend.sh" | grep -v grep | awk '{print $2}')
+	if [ x"$upgrade_pid" != x"" ]; then
+		kill -9 $upgrade_pid
+	fi
+
+    check_docker_status spacex-sfrontend
+    if [ $? -ne 1 ]; then
+        log_info "Stopping spacex sfrontend service"
+        docker stop spacex-sfrontend &>/dev/null
+        docker rm spacex-sfrontend &>/dev/null
+    fi
+    return 0
+}
+
+start_ipfs()
+{
+    if [ ! -f "$composeyaml" ]; then
+        log_err "No configuration file, please set config"
+        return 1
+    fi
+
+    if [ -d "$builddir/ipfs" ]; then
+        check_docker_status ipfs
+        if [ $? -eq 0 ]; then
+            return 0
+        fi
+
+        local res=0
+        check_port 4001
+        res=$(($?|$res))
+        check_port 5001
+        res=$(($?|$res))
+        check_port 37773
+        res=$(($?|$res))
+        if [ $res -ne 0 ]; then
+            return 1
+        fi
+
+        docker-compose -f $composeyaml up -d ipfs
+        if [ $? -ne 0 ]; then
+            log_err "Start ipfs failed"
+            return 1
+        fi
+    fi
+    return 0
+}
+
+stop_ipfs()
+{
+    check_docker_status ipfs
+    if [ $? -ne 1 ]; then
+        log_info "Stopping ipfs service"
+        docker stop ipfs &>/dev/null
+        docker rm ipfs &>/dev/null
     fi
     return 0
 }
