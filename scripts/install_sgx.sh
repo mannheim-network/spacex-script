@@ -1,10 +1,10 @@
 #!/bin/bash
 
-source /opt/spacex/spacex-script/scripts/utils.sh
+source /opt/mannheim-network/spacex-script/scripts/utils.sh
 
 #!/bin/bash
 
-source /opt/spacex/spacex-script/scripts/utils.sh
+source /opt/mannheim-network/spacex-script/scripts/utils.sh
 
 is_16=`cat /etc/issue | grep 16.04`
 is_18=`cat /etc/issue | grep 18.04`

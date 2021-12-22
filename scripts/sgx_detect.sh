@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /opt/spacex/spacex-script/scripts/utils.sh
+source /opt/mannheim-network/spacex-script/scripts/utils.sh
 
 install_sgx_driver()
 {

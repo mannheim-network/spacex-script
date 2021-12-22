@@ -1,6 +1,6 @@
 #!/bin/bash
 
-installdir=/opt/spacex/spacex-script
+installdir=/opt/mannheim-network/spacex-script
 bin_file=/usr/bin/spacex
 
 if [ $(id -u) -ne 0 ]; then

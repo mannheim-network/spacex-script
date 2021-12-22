@@ -3,7 +3,7 @@
 node_type="mainnet"
 node_version="v1.0.0"
 aliyun_address="registry.cn-beijing.aliyuncs.com"
-basedir=/opt/spacex/spacex-script
+basedir=/opt/mannheim-network/spacex-script
 scriptdir=$basedir/scripts
 builddir=$basedir/build
 configfile=$basedir/config.yaml
