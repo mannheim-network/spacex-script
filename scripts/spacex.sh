@@ -4,7 +4,7 @@ source /opt/mannheim-network/spacex-script/scripts/utils.sh
 source /opt/mannheim-network/spacex-script/scripts/version.sh
 source /opt/mannheim-network/spacex-script/scripts/config.sh
 source /opt/mannheim-network/spacex-script/scripts/tools.sh
-export EX_SWORKER_ARGS=''
+export EX_STORAGE_ARGS=''
 
 
 start()
@@ -36,7 +36,7 @@ start()
             fi
         fi
 
-        start_sworker
+        start_storage
         if [ $? -ne 0 ]; then
             docker-compose -f $composeyaml down
             exit 1
@@ -87,7 +87,7 @@ start()
     if [ x"$1" = x"storage" ]; then
         log_info "Start storage service"
         shift
-        start_sworker $@
+        start_storage $@
         if [ $? -ne 0 ]; then
             exit 1
         fi
@@ -769,3 +769,89 @@ sfrontend_status()
 	fi
 
 
+cat << EOF
+-----------------------------------------
+    Service                    Status
+-----------------------------------------
+    sfrontend                   ${sfrontend_status}
+    upgrade-shell              ${upgrade_shell_status}
+-----------------------------------------
+EOF
+}
+
+ipfs_status()
+{
+    local ipfs_status="stop"
+
+    check_docker_status ipfs
+    res=$?
+    if [ $res -eq 0 ]; then
+        ipfs_status="running"
+    elif [ $res -eq 2 ]; then
+        ipfs_status="exited"
+    fi
+
+cat << EOF
+-----------------------------------------
+    Service                    Status
+-----------------------------------------
+    ipfs                       ${ipfs_status}
+-----------------------------------------
+EOF
+}
+
+######################################main entrance############################################
+
+help()
+{
+cat << EOF
+Usage:
+    help                                                             show help information
+    version                                                          show version
+
+    start {chain|api|storage|sfrontend|ipfs}                          start all spacex service
+    stop {chain|api|storage|sfrontend|ipfs}                           stop all spacex service or stop one service
+
+    status {chain|api|storage|sfrontend|ipfs}                         check status or reload one service status
+    reload {chain|api|storage|sfrontend|ipfs}                         reload all service or reload one service
+    logs {chain|api|storage|storage-a|storage-b|sfrontend|ipfs}       track service logs, ctrl-c to exit. use 'spacex logs help' for more details
+
+    tools {...}                                                      use 'spacex tools help' for more details
+    config {...}                                                     configuration operations, use 'spacex config help' for more details
+EOF
+}
+
+case "$1" in
+    version)
+        version
+        ;;
+    start)
+        shift
+        start $@
+        ;;
+    stop)
+        stop $2
+        ;;
+    reload)
+        shift
+        reload $@
+        ;;
+    status)
+        status $2
+        ;;
+    logs)
+        shift
+        logs $@
+        ;;
+    config)
+        shift
+        config $@
+        ;;
+    tools)
+        shift
+        tools $@
+        ;;
+    *)
+        help
+esac
+exit 0
