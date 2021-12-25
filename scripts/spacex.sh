@@ -592,4 +592,180 @@ logs()
 }
 
 
+#######################################status################################################
+
+status()
+{
+    if [ x"$1" == x"chain" ]; then
+        chain_status
+    elif [ x"$1" == x"api" ]; then
+        api_status
+    elif [ x"$1" == x"storage" ]; then
+        storage_status
+    elif [ x"$1" == x"sfrontend" ]; then
+        sfrontend_status
+    elif [ x"$1" == x"ipfs" ]; then
+        ipfs_status
+    elif [ x"$1" == x"" ]; then
+        all_status
+    else
+        help
+    fi
+}
+
+all_status()
+{
+    local chain_status="stop"
+    local api_status="stop"
+    local storage_status="stop"
+    local sfrontend_status="stop"
+    local ipfs_status="stop"
+
+    check_docker_status spacex
+    local res=$?
+    if [ $res -eq 0 ]; then
+        chain_status="running"
+    elif [ $res -eq 2 ]; then
+        chain_status="exited"
+    fi
+
+    check_docker_status spacex-api
+    res=$?
+    if [ $res -eq 0 ]; then
+        api_status="running"
+    elif [ $res -eq 2 ]; then
+        api_status="exited"
+    fi
+
+    local a_or_b=`cat $basedir/etc/storage.ab`
+    check_docker_status spacex-storage-$a_or_b
+    res=$?
+    if [ $res -eq 0 ]; then
+        storage_status="running"
+    elif [ $res -eq 2 ]; then
+        storage_status="exited"
+    fi
+
+    check_docker_status spacex-sfrontend
+    res=$?
+    if [ $res -eq 0 ]; then
+        sfrontend_status="running"
+    elif [ $res -eq 2 ]; then
+        sfrontend_status="exited"
+    fi
+
+    check_docker_status ipfs
+    res=$?
+    if [ $res -eq 0 ]; then
+        ipfs_status="running"
+    elif [ $res -eq 2 ]; then
+        ipfs_status="exited"
+    fi
+
+cat << EOF
+-----------------------------------------
+    Service                    Status
+-----------------------------------------
+    chain                      ${chain_status}
+    api                        ${api_status}
+    storage                    ${storage_status}
+    sfrontend                   ${sfrontend_status}
+    ipfs                       ${ipfs_status}
+-----------------------------------------
+EOF
+}
+
+chain_status()
+{
+    local chain_status="stop"
+
+    check_docker_status spacex
+    local res=$?
+    if [ $res -eq 0 ]; then
+        chain_status="running"
+    elif [ $res -eq 2 ]; then
+        chain_status="exited"
+    fi
+
+cat << EOF
+-----------------------------------------
+    Service                    Status
+-----------------------------------------
+    chain                      ${chain_status}
+-----------------------------------------
+EOF
+}
+
+api_status()
+{
+    local api_status="stop"
+
+    check_docker_status spacex-api
+    res=$?
+    if [ $res -eq 0 ]; then
+        api_status="running"
+    elif [ $res -eq 2 ]; then
+        api_status="exited"
+    fi
+
+cat << EOF
+-----------------------------------------
+    Service                    Status
+-----------------------------------------
+    api                        ${api_status}
+-----------------------------------------
+EOF
+}
+
+storage_status()
+{
+    local storage_a_status="stop"
+    local storage_b_status="stop"
+    local a_or_b=`cat $basedir/etc/storage.ab`
+
+    check_docker_status spacex-storage-a
+    local res=$?
+    if [ $res -eq 0 ]; then
+        storage_a_status="running"
+    elif [ $res -eq 2 ]; then
+        storage_a_status="exited"
+    fi
+
+    check_docker_status spacex-storage-b
+    res=$?
+    if [ $res -eq 0 ]; then
+        storage_b_status="running"
+    elif [ $res -eq 2 ]; then
+        storage_b_status="exited"
+    fi
+
+cat << EOF
+-----------------------------------------
+    Service                    Status
+-----------------------------------------
+    storage-a                  ${storage_a_status}
+    storage-b                  ${storage_b_status}
+    main-progress              ${a_or_b}
+-----------------------------------------
+EOF
+}
+
+sfrontend_status()
+{
+    local sfrontend_status="stop"
+    local upgrade_shell_status="stop"
+
+    check_docker_status spacex-sfrontend
+    res=$?
+    if [ $res -eq 0 ]; then
+        sfrontend_status="running"
+    elif [ $res -eq 2 ]; then
+        sfrontend_status="exited"
+    fi
+
+    local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_sfrontend.sh" | grep -v grep | awk '{print $2}')
+	if [ x"$upgrade_pid" != x"" ]; then
+		upgrade_shell_status="running->${upgrade_pid}"
+	fi
+
 
