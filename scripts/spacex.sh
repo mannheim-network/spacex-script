@@ -422,3 +422,174 @@ stop_ipfs()
     return 0
 }
 
+
+
+
+
+reload() {
+    if [ x"$1" = x"" ]; then
+        log_info "Reload all service"
+        stop
+        start
+        log_success "Reload all service success"
+        return 0
+    fi
+
+    if [ x"$1" = x"chain" ]; then
+        log_info "Reload chain service"
+
+        stop_chain
+        start_chain
+
+        log_success "Reload chain service success"
+        return 0
+    fi
+
+    if [ x"$1" = x"api" ]; then
+        log_info "Reload api service"
+
+        stop_api
+        start_api
+
+        log_success "Reload api service success"
+        return 0
+    fi
+
+    if [ x"$1" = x"storage" ]; then
+        log_info "Reload storage service"
+
+        stop_storage
+        shift
+        start_storage $@
+
+        log_success "Reload storage service success"
+        return 0
+    fi
+
+    if [ x"$1" = x"sfrontend" ]; then
+        log_info "Reload sfrontend service"
+
+        stop_sfrontend
+        start_sfrontend
+
+        log_success "Reload sfrontend service success"
+        return 0
+    fi
+
+    if [ x"$1" = x"ipfs" ]; then
+        log_info "Reload ipfs service"
+
+        stop_ipfs
+        start_ipfs
+
+        log_success "Reload ipfs service success"
+        return 0
+    fi
+
+    help
+    return 1
+}
+
+########################################logs################################################
+
+logs_help()
+{
+cat << EOF
+Usage: spacex logs [OPTIONS] {chain|api|storage|storage-a|storage-b|sfrontend|ipfs}
+
+Fetch the logs of a service
+
+Options:
+      --details        Show extra details provided to logs
+  -f, --follow         Follow log output
+      --since string   Show logs since timestamp (e.g. 2012-01-02T13:23:37) or relative (e.g. 42m for 42 minutes)
+      --tail string    Number of lines to show from the end of the logs (default "all")
+  -t, --timestamps     Show timestamps
+      --until string   Show logs before a timestamp (e.g. 2012-01-02T13:23:37) or relative (e.g. 42m for 42 minutes)
+EOF
+}
+
+logs()
+{
+    local name="${!#}"
+    local array=( "$@" )
+    local logs_help_flag=0
+    unset "array[${#array[@]}-1]"
+
+    if [ x"$name" == x"chain" ]; then
+        check_docker_status spacex
+        if [ $? -eq 1 ]; then
+            log_info "Service spacex chain is not started now"
+            return 0
+        fi
+        docker logs ${array[@]} -f spacex
+        logs_help_flag=$?
+    elif [ x"$name" == x"api" ]; then
+        check_docker_status spacex-api
+        if [ $? -eq 1 ]; then
+            log_info "Service spacex API is not started now"
+            return 0
+        fi
+        docker logs ${array[@]} -f spacex-api
+        logs_help_flag=$?
+    elif [ x"$name" == x"storage" ]; then
+        local a_or_b=`cat $basedir/etc/storage.ab`
+        check_docker_status spacex-storage-$a_or_b
+        if [ $? -eq 1 ]; then
+            log_info "Service spacex storage is not started now"
+            return 0
+        fi
+        docker logs ${array[@]} -f spacex-storage-$a_or_b
+        logs_help_flag=$?
+    elif [ x"$name" == x"ipfs" ]; then
+        check_docker_status ipfs
+        if [ $? -eq 1 ]; then
+            log_info "Service ipfs is not started now"
+            return 0
+        fi
+        docker logs ${array[@]} -f ipfs
+        logs_help_flag=$?
+    elif [ x"$name" == x"sfrontend" ]; then
+        check_docker_status spacex-sfrontend
+        if [ $? -eq 1 ]; then
+            log_info "Service spacex sfrontend is not started now"
+            return 0
+        fi
+        docker logs ${array[@]} -f spacex-sfrontend
+        logs_help_flag=$?
+    elif [ x"$name" == x"storage-a" ]; then
+        check_docker_status spacex-storage-a
+        if [ $? -eq 1 ]; then
+            log_info "Service spacex storage-a is not started now"
+            return 0
+        fi
+        docker logs ${array[@]} -f spacex-storage-a
+        logs_help_flag=$?
+    elif [ x"$name" == x"storage-b" ]; then
+        check_docker_status spacex-storage-b
+        if [ $? -eq 1 ]; then
+            log_info "Service spacex storage-b is not started now"
+            return 0
+        fi
+        docker logs ${array[@]} -f spacex-storage-b
+        logs_help_flag=$?
+    elif [ x"$name" == x"sfrontend-upshell" ]; then
+		local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_sfrontend.sh" | grep -v grep | awk '{print $2}')
+		if [ x"$upgrade_pid" == x"" ]; then
+			log_info "Service spacex sfrontend upgrade shell is not started now"
+			return 0
+		fi
+		tail -f $basedir/auto_sfrontend.log
+    else
+        logs_help
+        return 1
+    fi
+
+    if [ $logs_help_flag -ne 0 ]; then
+        logs_help
+        return 1
+    fi
+}
+
+
+
