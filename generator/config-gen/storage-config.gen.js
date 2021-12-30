@@ -8,7 +8,7 @@ async function genStorageConfig(config, outputCfg) {
     dataPaths.push("/opt/mannheim-network/disks/" + i)
   }
 
-  const sworkerConfig = {
+  const storageConfig = {
     base_path: "/opt/mannheim-network/data/storage",
     base_url: "http://127.0.0.1:12222/api/v0",
     chain: getSharedChainConfig(config),
