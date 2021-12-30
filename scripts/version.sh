@@ -56,9 +56,9 @@ inner_docker_version()
 
     printf "Docker images:\n"
     printf "  Chain: ${chain_image}\n"
-    printf "  SWorker: ${storage_image}\n"
+    printf "  Storage: ${storage_image}\n"
     printf "  C-gen: ${cgen_image}\n"
     printf "  IPFS: ${ipfs_image}\n"
     printf "  API: ${api_image}\n"
-    printf "  Smanager: ${sfrontend_image}\n"
+    printf "  Sfrontend: ${sfrontend_image}\n"
 }

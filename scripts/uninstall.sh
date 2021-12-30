@@ -9,7 +9,7 @@ if [ $(id -u) -ne 0 ]; then
 fi
 
 if [ -f "$bin_file" ]; then
-    crust stop
+    spacex stop
     rm /usr/bin/spacex
 fi
 

@@ -407,7 +407,7 @@ storage_ab_upgrade()
         docker rm spacex-storage-$a_or_b &>/dev/null
 
         shift
-        EX_STROAGE_ARGS="--upgrade $@" docker-compose -f $composeyaml up -d spacex-storage-$a_or_b
+        EX_STORAGE_ARGS="--upgrade $@" docker-compose -f $composeyaml up -d spacex-storage-$a_or_b
 
         if [ $? -ne 0 ]; then
             log_err "Setup new storage failed"

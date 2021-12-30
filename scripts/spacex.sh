@@ -146,7 +146,7 @@ stop()
         return 0
     fi
 
-    if [ x"$1" = x"stroage" ]; then
+    if [ x"$1" = x"storage" ]; then
         log_info "Stop storage service"
         stop_storage
         log_success "Stop storage service success"

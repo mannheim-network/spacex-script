@@ -41,7 +41,7 @@ async function genSfrontendConfig(config, outputCfg) {
       network_mode: 'host',
       restart: 'unless-stopped',
       environment: {
-        SMANAGER_CONFIG: "/config/sfrontend_config.json",
+        SFRONTEND_CONFIG: "/config/sfrontend_config.json",
       },
       volumes: [
         './sfrontend:/config',
