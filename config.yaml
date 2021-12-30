@@ -19,7 +19,7 @@ identity:
 ## chain configurations
 chain:
   ## the name of chain node
-  name: "crust-node"
+  name: "spacex-node"
   ## the port of chain node
   port: 30888
 
