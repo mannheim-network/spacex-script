@@ -1,0 +1,43 @@
+version: '3.0'
+services:
+  spacex:
+    image: 'mannheim-network/spacex:latest'
+    network_mode: host
+    volumes:
+      - '/opt/mannheim-network/data/watchchain:/opt/mannheim-network/data/watchchain'
+    command:
+      - ./spacex
+      - '--base-path'
+      - /opt/mannheim-network/data/watchchain
+      - '--chain'
+      - mainnet
+      - '--port'
+      - '30888'
+      - '--name'
+      - spacex-script
+      - '--rpc-port'
+      - '19933'
+      - '--ws-port'
+      - '19944'
+      - '--execution'
+      - 'WASM'
+      - '--wasm-execution'
+      - compiled
+      - '--in-peers'
+      - '75'
+      - '--out-peers'
+      - '75'
+      - '--no-telemetry'
+      - '--pruning'
+      - '8000'
+      - '--ws-max-connections'
+      - '500'
+      - '--ws-external'
+      - '--rpc-external'
+      - '--rpc-cors'
+      - 'all'
+    logging:
+      driver: json-file
+      options:
+        max-size: 500m
+    container_name: spacex-watch
