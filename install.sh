@@ -90,9 +90,9 @@ download_docker_images()
     res=$(($?|$res))
     docker tag $docker_org/spacex-storage:$node_type mannheim-network/spacex-storage
 
-    docker pull $docker_org/spacex-sfrontend:$node_type
+    docker pull $docker_org/spacex-sdatamanager:$node_type
     res=$(($?|$res))
-    docker tag $docker_org/spacex-sfrontend:$node_type mannheim-network/spacex-sfrontend
+    docker tag $docker_org/spacex-sdatamanager:$node_type mannheim-network/spacex-sdatamanager
 
     docker pull $docker_org/go-ipfs:$node_type
     res=$(($?|$res))

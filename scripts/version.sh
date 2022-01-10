@@ -51,8 +51,8 @@ inner_docker_version()
     local api_image=(`docker images | grep '^\b'mannheim-network/spacex-api'\b ' | grep 'latest'`)
     api_image=${api_image[2]}
 
-    local sfrontend_image=(`docker images | grep '^\b'mannheim-network/spacex-sfrontend'\b ' | grep 'latest'`)
-    sfrontend_image=${sfrontend_image[2]}
+    local sdatamanager_image=(`docker images | grep '^\b'mannheim-network/spacex-sdatamanager'\b ' | grep 'latest'`)
+    sdatamanager_image=${sdatamanager_image[2]}
 
     printf "Docker images:\n"
     printf "  Chain: ${chain_image}\n"
@@ -60,5 +60,5 @@ inner_docker_version()
     printf "  C-gen: ${cgen_image}\n"
     printf "  IPFS: ${ipfs_image}\n"
     printf "  API: ${api_image}\n"
-    printf "  Sfrontend: ${sfrontend_image}\n"
+    printf "  Sdatamanager: ${sdatamanager_image}\n"
 }

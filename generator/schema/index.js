@@ -17,9 +17,9 @@ function getConfigSchema(config) {
     sMap["storage"] = Joi.object().default()
   }
 
-  if (config.node.sfrontend != "disable") {
+  if (config.node.sdatamanager != "disable") {
     sMap["identity"] = identitySchema.required()
-    sMap["sfrontend"] = Joi.object().default()
+    sMap["sdatamanager"] = Joi.object().default()
   }
 
   if (config.node.ipfs == "enable") {

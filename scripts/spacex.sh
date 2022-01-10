@@ -48,7 +48,7 @@ start()
             exit 1
         fi
 
-        start_sfrontend
+        start_sdatamanager
         if [ $? -ne 0 ]; then
             docker-compose -f $composeyaml down
             exit 1
@@ -95,13 +95,13 @@ start()
         return 0
     fi
 
-    if [ x"$1" = x"sfrontend" ]; then
-        log_info "Start sfrontend service"
-        start_sfrontend
+    if [ x"$1" = x"sdatamanager" ]; then
+        log_info "Start sdatamanager service"
+        start_sdatamanager
         if [ $? -ne 0 ]; then
             exit 1
         fi
-        log_success "Start sfrontend service success"
+        log_success "Start sdatamanager service success"
         return 0
     fi
 
@@ -124,7 +124,7 @@ stop()
     if [ x"$1" = x"" ]; then
         log_info "Stop spacex"
         stop_chain
-        stop_sfrontend
+        stop_sdatamanager
         stop_api
         stop_storage
         stop_ipfs
@@ -153,8 +153,8 @@ stop()
         return 0
     fi
 
-    if [ x"$1" = x"sfrontend" ]; then
-        log_info "Cannot stop the sfrontend service alone, this will affect your benefits"
+    if [ x"$1" = x"sdatamanager" ]; then
+        log_info "Cannot stop the sdatamanager service alone, this will affect your benefits"
         return 0
     fi
 
@@ -327,34 +327,34 @@ stop_api()
     return 0
 }
 
-start_sfrontend()
+start_sdatamanager()
 {
     if [ ! -f "$composeyaml" ]; then
         log_err "No configuration file, please set config"
         return 1
     fi
 
-    if [ -d "$builddir/sfrontend" ]; then
-        check_docker_status spacex-sfrontend
+    if [ -d "$builddir/sdatamanager" ]; then
+        check_docker_status spacex-sdatamanager
         if [ $? -eq 0 ]; then
             return 0
         fi
 
-        docker-compose -f $composeyaml up -d spacex-sfrontend
+        docker-compose -f $composeyaml up -d spacex-sdatamanager
         if [ $? -ne 0 ]; then
-            log_err "Start spacex-sfrontend failed"
+            log_err "Start spacex-sdatamanager failed"
             return 1
         fi
 
-        local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_sfrontend.sh" | grep -v grep | awk '{print $2}')
+        local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
         if [ x"$upgrade_pid" != x"" ]; then
             kill -9 $upgrade_pid
         fi
 
-        if [ -f "$scriptdir/auto_sfrontend.sh" ]; then
-            nohup $scriptdir/auto_sfrontend.sh &>$basedir/auto_sfrontend.log &
+        if [ -f "$scriptdir/auto_sdatamanager.sh" ]; then
+            nohup $scriptdir/auto_sdatamanager.sh &>$basedir/auto_sdatamanager.log &
             if [ $? -ne 0 ]; then
-                log_err "Start spacex-sfrontend upgrade failed"
+                log_err "Start spacex-sdatamanager upgrade failed"
                 return 1
             fi
         fi
@@ -362,18 +362,18 @@ start_sfrontend()
     return 0
 }
 
-stop_sfrontend()
+stop_sdatamanager()
 {
-    local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_stop_sfrontend.sh" | grep -v grep | awk '{print $2}')
+    local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_stop_sdatamanager.sh" | grep -v grep | awk '{print $2}')
 	if [ x"$upgrade_pid" != x"" ]; then
 		kill -9 $upgrade_pid
 	fi
 
-    check_docker_status spacex-sfrontend
+    check_docker_status spacex-sdatamanager
     if [ $? -ne 1 ]; then
-        log_info "Stopping spacex sfrontend service"
-        docker stop spacex-sfrontend &>/dev/null
-        docker rm spacex-sfrontend &>/dev/null
+        log_info "Stopping spacex sdatamanager service"
+        docker stop spacex-sdatamanager &>/dev/null
+        docker rm spacex-sdatamanager &>/dev/null
     fi
     return 0
 }
@@ -466,13 +466,13 @@ reload() {
         return 0
     fi
 
-    if [ x"$1" = x"sfrontend" ]; then
-        log_info "Reload sfrontend service"
+    if [ x"$1" = x"sdatamanager" ]; then
+        log_info "Reload sdatamanager service"
 
-        stop_sfrontend
-        start_sfrontend
+        stop_sdatamanager
+        start_sdatamanager
 
-        log_success "Reload sfrontend service success"
+        log_success "Reload sdatamanager service success"
         return 0
     fi
 
@@ -495,7 +495,7 @@ reload() {
 logs_help()
 {
 cat << EOF
-Usage: spacex logs [OPTIONS] {chain|api|storage|storage-a|storage-b|sfrontend|ipfs}
+Usage: spacex logs [OPTIONS] {chain|api|storage|storage-a|storage-b|sdatamanager|ipfs}
 
 Fetch the logs of a service
 
@@ -549,13 +549,13 @@ logs()
         fi
         docker logs ${array[@]} -f ipfs
         logs_help_flag=$?
-    elif [ x"$name" == x"sfrontend" ]; then
-        check_docker_status spacex-sfrontend
+    elif [ x"$name" == x"sdatamanager" ]; then
+        check_docker_status spacex-sdatamanager
         if [ $? -eq 1 ]; then
-            log_info "Service spacex sfrontend is not started now"
+            log_info "Service spacex sdatamanager is not started now"
             return 0
         fi
-        docker logs ${array[@]} -f spacex-sfrontend
+        docker logs ${array[@]} -f spacex-sdatamanager
         logs_help_flag=$?
     elif [ x"$name" == x"storage-a" ]; then
         check_docker_status spacex-storage-a
@@ -573,13 +573,13 @@ logs()
         fi
         docker logs ${array[@]} -f spacex-storage-b
         logs_help_flag=$?
-    elif [ x"$name" == x"sfrontend-upshell" ]; then
-		local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_sfrontend.sh" | grep -v grep | awk '{print $2}')
+    elif [ x"$name" == x"sdatamanager-upshell" ]; then
+		local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
 		if [ x"$upgrade_pid" == x"" ]; then
-			log_info "Service spacex sfrontend upgrade shell is not started now"
+			log_info "Service spacex sdatamanager upgrade shell is not started now"
 			return 0
 		fi
-		tail -f $basedir/auto_sfrontend.log
+		tail -f $basedir/auto_sdatamanager.log
     else
         logs_help
         return 1
@@ -602,8 +602,8 @@ status()
         api_status
     elif [ x"$1" == x"storage" ]; then
         storage_status
-    elif [ x"$1" == x"sfrontend" ]; then
-        sfrontend_status
+    elif [ x"$1" == x"sdatamanager" ]; then
+        sdatamanager_status
     elif [ x"$1" == x"ipfs" ]; then
         ipfs_status
     elif [ x"$1" == x"" ]; then
@@ -618,7 +618,7 @@ all_status()
     local chain_status="stop"
     local api_status="stop"
     local storage_status="stop"
-    local sfrontend_status="stop"
+    local sdatamanager_status="stop"
     local ipfs_status="stop"
 
     check_docker_status spacex
@@ -646,12 +646,12 @@ all_status()
         storage_status="exited"
     fi
 
-    check_docker_status spacex-sfrontend
+    check_docker_status spacex-sdatamanager
     res=$?
     if [ $res -eq 0 ]; then
-        sfrontend_status="running"
+        sdatamanager_status="running"
     elif [ $res -eq 2 ]; then
-        sfrontend_status="exited"
+        sdatamanager_status="exited"
     fi
 
     check_docker_status ipfs
@@ -669,7 +669,7 @@ cat << EOF
     chain                      ${chain_status}
     api                        ${api_status}
     storage                    ${storage_status}
-    sfrontend                   ${sfrontend_status}
+    sdatamanager                   ${sdatamanager_status}
     ipfs                       ${ipfs_status}
 -----------------------------------------
 EOF
@@ -750,20 +750,20 @@ cat << EOF
 EOF
 }
 
-sfrontend_status()
+sdatamanager_status()
 {
-    local sfrontend_status="stop"
+    local sdatamanager_status="stop"
     local upgrade_shell_status="stop"
 
-    check_docker_status spacex-sfrontend
+    check_docker_status spacex-sdatamanager
     res=$?
     if [ $res -eq 0 ]; then
-        sfrontend_status="running"
+        sdatamanager_status="running"
     elif [ $res -eq 2 ]; then
-        sfrontend_status="exited"
+        sdatamanager_status="exited"
     fi
 
-    local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_sfrontend.sh" | grep -v grep | awk '{print $2}')
+    local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
 	if [ x"$upgrade_pid" != x"" ]; then
 		upgrade_shell_status="running->${upgrade_pid}"
 	fi
@@ -773,7 +773,7 @@ cat << EOF
 -----------------------------------------
     Service                    Status
 -----------------------------------------
-    sfrontend                   ${sfrontend_status}
+    sdatamanager                   ${sdatamanager_status}
     upgrade-shell              ${upgrade_shell_status}
 -----------------------------------------
 EOF
@@ -809,12 +809,12 @@ Usage:
     help                                                             show help information
     version                                                          show version
 
-    start {chain|api|storage|sfrontend|ipfs}                          start all spacex service
-    stop {chain|api|storage|sfrontend|ipfs}                           stop all spacex service or stop one service
+    start {chain|api|storage|sdatamanager|ipfs}                          start all spacex service
+    stop {chain|api|storage|sdatamanager|ipfs}                           stop all spacex service or stop one service
 
-    status {chain|api|storage|sfrontend|ipfs}                         check status or reload one service status
-    reload {chain|api|storage|sfrontend|ipfs}                         reload all service or reload one service
-    logs {chain|api|storage|storage-a|storage-b|sfrontend|ipfs}       track service logs, ctrl-c to exit. use 'spacex logs help' for more details
+    status {chain|api|storage|sdatamanager|ipfs}                         check status or reload one service status
+    reload {chain|api|storage|sdatamanager|ipfs}                         reload all service or reload one service
+    logs {chain|api|storage|storage-a|storage-b|sdatamanager|ipfs}       track service logs, ctrl-c to exit. use 'spacex logs help' for more details
 
     tools {...}                                                      use 'spacex tools help' for more details
     config {...}                                                     configuration operations, use 'spacex config help' for more details

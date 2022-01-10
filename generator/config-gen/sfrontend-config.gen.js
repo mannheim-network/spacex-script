@@ -1,5 +1,5 @@
-async function genSfrontendConfig(config, outputCfg) {
-    const sfrontendConfig = {
+async function genSdatamanagerConfig(config, outputCfg) {
+    const sdatamanagerConfig = {
       chain: {
         account: config.identity.backup.address,
         endPoint: config.api.ws
@@ -11,7 +11,7 @@ async function genSfrontendConfig(config, outputCfg) {
         endPoint: "http://127.0.0.1:5001"
       },
       node: {
-        role: config.node.sfrontend
+        role: config.node.sdatamanager
       },
       telemetry: {
         endPoint: "#####.#####"
@@ -27,25 +27,25 @@ async function genSfrontendConfig(config, outputCfg) {
     }
   
     return {
-      config: sfrontendConfig,
+      config: sdatamanagerConfig,
       paths: [{
         required: true,
-        path: '/opt/mannheim-network/data/sfrontend',
+        path: '/opt/mannheim-network/data/sdatamanager',
       }],
     }
   }
   
-  async function genSfrontendComposeConfig(config) {
+  async function genSdatamanagerComposeConfig(config) {
     return {
-      image: 'mannheim-network/spacex-sfrontend:latest',
+      image: 'mannheim-network/spacex-sdatamanager:latest',
       network_mode: 'host',
       restart: 'unless-stopped',
       environment: {
-        SFRONTEND_CONFIG: "/config/sfrontend_config.json",
+        SDATAMANAGER_CONFIG: "/config/sdatamanager_config.json",
       },
       volumes: [
-        './sfrontend:/config',
-        '/opt/mannheim-network/data/sfrontend:/data'
+        './sdatamanager:/config',
+        '/opt/mannheim-network/data/sdatamanager:/data'
       ],
       logging: {
         driver: "json-file",
@@ -57,7 +57,7 @@ async function genSfrontendConfig(config, outputCfg) {
   }
   
   module.exports = {
-    genSfrontendConfig,
-    genSfrontendComposeConfig,
+    genSdatamanagerConfig,
+    genSdatamanagerComposeConfig,
   }
   

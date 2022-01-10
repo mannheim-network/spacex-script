@@ -4,7 +4,7 @@
 const path = require('path')
 const { createDir, writeConfig, } = require('../utils')
 const { genApiConfig, genApiComposeConfig } = require('./api-config.gen')
-const { genSfrontendConfig, genSfrontendComposeConfig } = require('./sfrontend-config.gen')
+const { genSdatamanagerConfig, genSdatamanagerComposeConfig } = require('./sdatamanager-config.gen')
 const { genIpfsConfig, genIpfsComposeConfig } = require('./ipfs-config.gen')
 const { genChainConfig, genChainComposeConfig } = require('./chain-config.gen')
 const { genStorageConfig, genStorageComposeConfig } = require('./storage-config.gen')
@@ -49,11 +49,11 @@ const configGenerators = [{
   composeName: 'spacex-storage-b',
   composeFunc: genStorageComposeConfig,
 }, {
-  name: 'sfrontend',
-  configFunc: genSfrontendConfig,
-  to: path.join('sfrontend', 'sfrontend_config.json'),
-  composeName: 'spacex-sfrontend',
-  composeFunc: genSfrontendComposeConfig,
+  name: 'sdatamanager',
+  configFunc: genSdatamanagerConfig,
+  to: path.join('sdatamanager', 'sdatamanager_config.json'),
+  composeName: 'spacex-sdatamanager',
+  composeFunc: genSdatamanagerComposeConfig,
 }, {
   name: 'ipfs',
   configFunc: genIpfsConfig,

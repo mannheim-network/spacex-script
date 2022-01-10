@@ -4,8 +4,8 @@ node:
   chain: "authority"
   ## the type of storage: disable/enable
   storage: "enable"
-  ## the type of sfrontend: disable/isolation/member
-  sfrontend: "disable"
+  ## the type of sdatamanager: disable/isolation/member
+  sdatamanager: "disable"
   ## the type of ipfs: disable/enable
   ipfs: "disable"
 

@@ -51,7 +51,7 @@ config_set_all()
     if [ x"$mode" == x"owner" ]; then
         sed -i '4c \\  chain: "authority"' $configfile &>/dev/null
         sed -i '6c \\  storage: "disable"' $configfile &>/dev/null
-        sed -i '8c \\  sfrontend: "disable"' $configfile &>/dev/null
+        sed -i '8c \\  sdatamanager: "disable"' $configfile &>/dev/null
         sed -i '10c \\  ipfs: "disable"' $configfile &>/dev/null
         local old_mode=`cat $basedir/etc/mode.conf`
         sed -i 's/'$old_mode'/'$mode'/g' $basedir/etc/mode.conf
@@ -62,13 +62,13 @@ config_set_all()
     elif [ x"$mode" == x"isolation" ]; then
         sed -i '4c \\  chain: "authority"' $configfile &>/dev/null
         sed -i '6c \\  storage: "enable"' $configfile &>/dev/null
-        sed -i '8c \\  sfrontend: "'$mode'"' $configfile &>/dev/null
+        sed -i '8c \\  sdatamanager: "'$mode'"' $configfile &>/dev/null
         sed -i '10c \\  ipfs: "enable"' $configfile &>/dev/null
         log_success "Set spacex node mode: '$mode' successfully"
     else
         sed -i '4c \\  chain: "full"' $configfile &>/dev/null
         sed -i '6c \\  storage: "enable"' $configfile &>/dev/null
-        sed -i '8c \\  sfrontend: "'$mode'"' $configfile &>/dev/null
+        sed -i '8c \\  sdatamanager: "'$mode'"' $configfile &>/dev/null
         sed -i '10c \\  ipfs: "enable"' $configfile &>/dev/null
         log_success "Set spacex node mode: '$mode' successfully"
     fi

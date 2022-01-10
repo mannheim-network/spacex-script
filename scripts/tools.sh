@@ -9,7 +9,7 @@ Spacex tools usage:
     help                                                       show help information
     space-info                                                 show information about data folders
     rotate-keys                                                generate session key of chain node
-    upgrade-image {chain|api|sfrontend|ipfs|c-gen|sw}           upgrade one docker image
+    upgrade-image {chain|api|sdatamanager|ipfs|c-gen|sw}           upgrade one docker image
     storage-ab-upgrade {code}                                  storage AB upgrade
     workload                                                   show workload information
     file-info {all|valid|lost|pending|{cid}} {output-file}     show file information
@@ -205,8 +205,8 @@ upgrade_image()
         if [ $? -ne 0 ]; then
             return 1
         fi
-    elif [ x"$1" == x"sfrontend" ]; then
-        upgrade_docker_image spacex-sfrontend $2
+    elif [ x"$1" == x"sdatamanager" ]; then
+        upgrade_docker_image spacex-sdatamanager $2
         if [ $? -ne 0 ]; then
             return 1
         fi
