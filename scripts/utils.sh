@@ -3,7 +3,7 @@
 #node_type="testnet"
 node_type="1.1.0"
 
-node_version="v1.0.0"
+node_version="v1.1.0"
 aliyun_address=""
 basedir=/opt/mannheimnetwork/spacex-script
 scriptdir=$basedir/scripts
