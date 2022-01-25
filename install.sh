@@ -118,13 +118,13 @@ create_node_paths()
     done
 }
 
-install_spacex_node()
+install_spacex_script()
 {
-    log_info "--------------Install spacex node-------------"
+    log_info "--------------Install spacex script-------------"
     local bin_file=/usr/bin/spacex
 
     if [ -d "$installdir" ] && [ -f "$bin_file" ] && [ x"$update" == x"true" ]; then
-        echo "Update spacex node"
+        echo "Update spacex script"
         rm $bin_file
         rm -rf $installdir/scripts
         cp -r $localbasedir/scripts $installdir/
@@ -132,11 +132,11 @@ install_spacex_node()
         cp $localbasedir/etc/watch-chain.yaml $installdir/etc/watch-chain.yaml
     else
         if [ -f "$installdir/scripts/uninstall.sh" ]; then
-            echo "Uninstall old spacex node"
+            echo "Uninstall old spacex script"
             $installdir/scripts/uninstall.sh
         fi
 
-        echo "Install new spacex node"
+        echo "Install new spacex script"
         create_node_paths
         cp -r $localbasedir/etc $installdir/
         cp $localbasedir/config.yaml $installdir/
@@ -188,4 +188,4 @@ done
 
 install_depenencies
 download_docker_images
-install_spacex_node
+install_spacex_script
