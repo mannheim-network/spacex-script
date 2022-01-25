@@ -23,10 +23,10 @@ config_show()
 config_set_all()
 {
     local chain_name=""
-    read -p "Enter spacex node name (default:spacex-script): " chain_name
+    read -p "Enter spacex node name (default:spacex-node): " chain_name
     chain_name=`echo "$chain_name"`
     if [ x"$chain_name" == x"" ]; then
-        chain_name="spacex-script"
+        chain_name="spacex-node"
     fi
     local tt=$(rand 100000 999999)
     chain_name="$chain_name-$tt"
