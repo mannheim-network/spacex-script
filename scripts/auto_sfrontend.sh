@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /opt/mannheim-network/spacex-script/scripts/utils.sh
+source /opt/mannheimnetwork/spacex-script/scripts/utils.sh
 
 auto_sdatamanager_main()
 {

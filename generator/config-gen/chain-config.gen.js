@@ -13,7 +13,7 @@ async function genChainComposeConfig(config) {
   let args = [
     './spacex',
     '--base-path',
-    '/opt/mannheim-network/data/chain',
+    '/opt/mannheimnetwork/data/chain',
     '--chain',
     'mainnet',
     '--port',
@@ -43,10 +43,10 @@ async function genChainComposeConfig(config) {
   }
 
   return {
-    image: 'mannheim-network/spacex:latest',
+    image: 'mannheimnetwork/spacex:latest',
     network_mode: 'host',
     volumes: [
-      '/opt/mannheim-network/data/chain:/opt/mannheim-network/data/chain'
+      '/opt/mannheimnetwork/data/chain:/opt/mannheimnetwork/data/chain'
     ],
     command: args,
     logging: {

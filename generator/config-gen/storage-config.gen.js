@@ -5,11 +5,11 @@ async function genStorageConfig(config, outputCfg) {
   var dataPaths = []
 
   for (i = 1; i <= 128; i++) {
-    dataPaths.push("/opt/mannheim-network/disks/" + i)
+    dataPaths.push("/opt/mannheimnetwork/disks/" + i)
   }
 
   const storageConfig = {
-    base_path: "/opt/mannheim-network/data/storage",
+    base_path: "/opt/mannheimnetwork/data/storage",
     base_url: "http://127.0.0.1:12222/api/v0",
     chain: getSharedChainConfig(config),
     data_path: dataPaths,
@@ -19,23 +19,23 @@ async function genStorageConfig(config, outputCfg) {
     config: storageConfig,
     paths: [{
       required: true,
-      path: '/opt/mannheim-network/data/storage',
+      path: '/opt/mannheimnetwork/data/storage',
     }, {
       required: true,
-      path: '/opt/mannheim-network/disks',
+      path: '/opt/mannheimnetwork/disks',
     }],
   }
 }
 
 async function genStorageComposeConfig(config) {
   let tempVolumes = [
-    '/opt/mannheim-network/data/storage:/opt/mannheim-network/data/storage',
-    '/opt/mannheim-network/disks:/opt/mannheim-network/disks',
+    '/opt/mannheimnetwork/data/storage:/opt/mannheimnetwork/data/storage',
+    '/opt/mannheimnetwork/disks:/opt/mannheimnetwork/disks',
     './storage:/config'
   ]
 
   return {
-    image: 'mannheim-network/spacex-storage:latest',
+    image: 'mannheimnetwork/spacex-storage:latest',
     network_mode: 'host',
     devices: [
       '/dev/isgx:/dev/isgx'

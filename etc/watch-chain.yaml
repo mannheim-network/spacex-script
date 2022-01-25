@@ -1,14 +1,14 @@
 version: '3.0'
 services:
   spacex:
-    image: 'mannheim-network/spacex:latest'
+    image: 'mannheimnetwork/spacex:latest'
     network_mode: host
     volumes:
-      - '/opt/mannheim-network/data/watchchain:/opt/mannheim-network/data/watchchain'
+      - '/opt/mannheimnetwork/data/watchchain:/opt/mannheimnetwork/data/watchchain'
     command:
       - ./spacex
       - '--base-path'
-      - /opt/mannheim-network/data/watchchain
+      - /opt/mannheimnetwork/data/watchchain
       - '--chain'
       - mainnet
       - '--port'

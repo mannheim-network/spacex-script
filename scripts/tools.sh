@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /opt/mannheim-network/spacex-script/scripts/utils.sh
+source /opt/mannheimnetwork/spacex-script/scripts/utils.sh
 
 tools_help()
 {
@@ -23,10 +23,10 @@ EOF
 
 space_info()
 {
-    local data_folder_info=(`df -h /opt/mannheim-network/data | sed -n '2p'`)
+    local data_folder_info=(`df -h /opt/mannheimnetwork/data | sed -n '2p'`)
 cat << EOF
 >>>>>> Base data folder <<<<<<
-Path: /opt/mannheim-network/data
+Path: /opt/mannheimnetwork/data
 File system: ${data_folder_info[0]}
 Total space: ${data_folder_info[1]}
 Used space: ${data_folder_info[2]}
@@ -34,10 +34,10 @@ Avail space: ${data_folder_info[3]}
 EOF
     local has_disks=false
     for i in $(seq 1 128); do
-        local disk_folder_info=(`df -h /opt/mannheim-network/disks/${i} | sed -n '2p'`)
+        local disk_folder_info=(`df -h /opt/mannheimnetwork/disks/${i} | sed -n '2p'`)
         if [ x"${disk_folder_info[0]}" != x"${data_folder_info[0]}" ]; then
             printf "\n>>>>>> Storage folder ${i} <<<<<<\n"
-            printf "Path: /opt/mannheim-network/disks/${i}\n"
+            printf "Path: /opt/mannheimnetwork/disks/${i}\n"
             printf "File system: ${disk_folder_info[0]}\n"
             printf "Total space: ${disk_folder_info[1]}\n"
             printf "Used space: ${disk_folder_info[2]}\n"
@@ -47,15 +47,15 @@ EOF
     done
 
     if [ "$has_disks" == false ]; then
-        log_err "Please mount the hard disk to storage folders, paths is from: /opt/mannheim-network/disks/1 ~ /opt/mannheim-network/disks/128"
+        log_err "Please mount the hard disk to storage folders, paths is from: /opt/mannheimnetwork/disks/1 ~ /opt/mannheimnetwork/disks/128"
         return 1
     fi
 
 cat << EOF
 
 PS:
-1. Base data folder is used to store chain and db, 2TB SSD is recommended, you can mount SSD on /opt/mannheim-network/data
-2. Please mount the hard disk to storage folders, paths is from: /opt/mannheim-network/disks/1 ~ /opt/mannheim-network/disks/128
+1. Base data folder is used to store chain and db, 2TB SSD is recommended, you can mount SSD on /opt/mannheimnetwork/data
+2. Please mount the hard disk to storage folders, paths is from: /opt/mannheimnetwork/disks/1 ~ /opt/mannheimnetwork/disks/128
 3. SRD will not use all the space, it will reserve 50G of space
 EOF
 }
@@ -346,8 +346,8 @@ storage_ab_upgrade()
         if [ $? -eq 0 ]; then
             local aimage=(`docker ps -a | grep 'spacex-storage-a'`)
             aimage=${aimage[1]}
-            if [ x"$aimage" != x"mannheim-network/spacex-storage:latest" ]; then
-                docker tag $aimage mannheim-network/spacex-storage:latest
+            if [ x"$aimage" != x"mannheimnetwork/spacex-storage:latest" ]; then
+                docker tag $aimage mannheimnetwork/spacex-storage:latest
             fi
         fi
 
@@ -355,19 +355,19 @@ storage_ab_upgrade()
         if [ $? -eq 0 ]; then
             local bimage=(`docker ps -a | grep 'spacex-storage-b'`)
             bimage=${bimage[1]}
-            if [ x"$bimage" != x"mannheim-network/spacex-storage:latest" ]; then
-                docker tag $bimage mannheim-network/spacex-storage:latest
+            if [ x"$bimage" != x"mannheimnetwork/spacex-storage:latest" ]; then
+                docker tag $bimage mannheimnetwork/spacex-storage:latest
             fi
         fi
         return 0
     fi
 
     # Upgrade storage images
-    local old_image=(`docker images | grep '^\b'mannheim-network/spacex-storage'\b ' | grep 'latest'`)
+    local old_image=(`docker images | grep '^\b'mannheimnetwork/spacex-storage'\b ' | grep 'latest'`)
     old_image=${old_image[2]}
 
     local region=`cat $basedir/etc/region.conf`
-    local docker_org="mannheim-network"
+    local docker_org="mannheimnetwork"
     if [ x"$region" == x"cn" ]; then
        docker_org=$aliyun_address/$docker_org
     fi
@@ -375,14 +375,14 @@ storage_ab_upgrade()
     local res=0
     docker pull $docker_org/spacex-storage:$code
     res=$(($?|$res))
-    docker tag $docker_org/spacex-storage:$code mannheim-network/spacex-storage:latest
+    docker tag $docker_org/spacex-storage:$code mannheimnetwork/spacex-storage:latest
 
     if [ $res -ne 0 ]; then
         log_err "Download storage docker image failed"
         return 1
     fi
 
-    local new_image=(`docker images | grep '^\b'mannheim-network/spacex-storage'\b ' | grep 'latest'`)
+    local new_image=(`docker images | grep '^\b'mannheimnetwork/spacex-storage'\b ' | grep 'latest'`)
     new_image=${new_image[2]}
     if [ x"$old_image" = x"$new_image" ]; then
         log_info "The current storage docker image is already the latest"
@@ -411,13 +411,13 @@ storage_ab_upgrade()
 
         if [ $? -ne 0 ]; then
             log_err "Setup new storage failed"
-            docker tag $old_image mannheim-network/spacex-storage:latest
+            docker tag $old_image mannheimnetwork/spacex-storage:latest
             return 1
         fi
     fi
 
     # Change back to older image
-    docker tag $old_image mannheim-network/spacex-storage:latest
+    docker tag $old_image mannheimnetwork/spacex-storage:latest
     log_info "Please do not close this program and wait patiently, ."
     log_info "If you need more information, please use other terminal to execute 'sudo spacex logs storage-a' and 'sudo spacex logs storage-b'"
 
@@ -451,7 +451,7 @@ storage_ab_upgrade()
     done
 
     # Set new information
-    docker tag $new_image mannheim-network/spacex-storage:latest
+    docker tag $new_image mannheimnetwork/spacex-storage:latest
 
     if [ x"$a_or_b" = x"a" ]; then
         sed -i 's/b/a/g' $basedir/etc/storage.ab

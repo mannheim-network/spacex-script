@@ -15,7 +15,7 @@ async function genApiComposeConfig(config) {
     `${config.api.ws}`,
   ].join(' ')
   return {
-    image: 'mannheim-network/spacex-api:latest',
+    image: 'mannheimnetwork/spacex-api:latest',
     network_mode: 'host',
     restart: 'always',
     environment: {
