@@ -1,8 +1,8 @@
 #!/bin/bash
 
-node_type="mainnet"
+node_type="testnet"
 node_version="v1.0.0"
-aliyun_address="registry.cn-beijing.aliyuncs.com"
+aliyun_address=""
 basedir=/opt/mannheimnetwork/spacex-script
 scriptdir=$basedir/scripts
 builddir=$basedir/build
@@ -42,9 +42,7 @@ function upgrade_docker_image()
 
     local region=`cat $basedir/etc/region.conf`
     local docker_org="mannheimnetwork"
-    if [ x"$region" == x"cn" ]; then
-       docker_org=$aliyun_address/$docker_org
-    fi
+
 
     local res=0
     docker pull $docker_org/$image_name:$image_tag

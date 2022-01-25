@@ -69,9 +69,7 @@ download_docker_images()
     log_info "-------Download spacex docker images----------"
 
     local docker_org="mannheimnetwork"
-    if [ x"$region" == x"cn" ]; then
-       docker_org=$aliyun_address/$docker_org
-    fi
+
 
     local res=0
     docker pull $docker_org/config-generator:$node_type
