@@ -72,13 +72,13 @@ download_docker_images()
 
 
     local res=0
-    docker pull $docker_org/config-generator:$node_type
-    res=$(($?|$res))
-    docker tag $docker_org/config-generator:$node_type mannheimnetwork/config-generator
+#    docker pull $docker_org/config-generator:$node_type
+#    res=$(($?|$res))
+#    docker tag $docker_org/config-generator:$node_type mannheimnetwork/config-generator
 
-    docker pull $docker_org/mannheimnetwork:$node_type
-    res=$(($?|$res))
-    docker tag $docker_org/mannheimnetwork:$node_type mannheimnetwork/spacex
+#    docker pull $docker_org/spacex:$node_type
+#    res=$(($?|$res))
+#    docker tag $docker_org/spacex:$node_type mannheimnetwork/spacex
 
     docker pull $docker_org/spacex-api:$node_type
     res=$(($?|$res))
@@ -88,9 +88,9 @@ download_docker_images()
     res=$(($?|$res))
     docker tag $docker_org/spacex-storage:$node_type mannheimnetwork/spacex-storage
 
-    docker pull $docker_org/spacex-sdatamanager:$node_type
-    res=$(($?|$res))
-    docker tag $docker_org/spacex-sdatamanager:$node_type mannheimnetwork/spacex-sdatamanager
+#    docker pull $docker_org/spacex-sdatamanager:$node_type
+#    res=$(($?|$res))
+#    docker tag $docker_org/spacex-sdatamanager:$node_type mannheimnetwork/spacex-sdatamanager
 
     docker pull $docker_org/go-ipfs:$node_type
     res=$(($?|$res))
