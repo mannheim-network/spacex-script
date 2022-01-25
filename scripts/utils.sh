@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #node_type="testnet"
-#node_type="1.1.0"
+node_type="1.1.0"
 
 node_version="v1.0.0"
 aliyun_address=""
