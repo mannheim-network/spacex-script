@@ -72,9 +72,9 @@ download_docker_images()
 
 
     local res=0
-#    docker pull $docker_org/config-generator:$node_type
-#    res=$(($?|$res))
-#    docker tag $docker_org/config-generator:$node_type mannheimnetwork/config-generator
+    docker pull $docker_org/config-generator:$node_type
+    res=$(($?|$res))
+    docker tag $docker_org/config-generator:$node_type mannheimnetwork/config-generator
 
 #    docker pull $docker_org/spacex:$node_type
 #    res=$(($?|$res))
