@@ -125,7 +125,7 @@ install_spacex_script()
         echo "Update spacex script"
         rm $bin_file
         rm -rf $installdir/scripts
-        cp -r $localbasedir/scripts $installdir/
+        cp -rp $localbasedir/scripts $installdir/
         rm $installdir/etc/watch-chain.yaml
         cp $localbasedir/etc/watch-chain.yaml $installdir/etc/watch-chain.yaml
     else
