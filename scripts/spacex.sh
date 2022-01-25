@@ -364,7 +364,7 @@ start_sdatamanager()
 
 stop_sdatamanager()
 {
-    local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_stop_sdatamanager.sh" | grep -v grep | awk '{print $2}')
+    local upgrade_pid=$(ps -ef | grep "/opt/mannheim-network/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
 	if [ x"$upgrade_pid" != x"" ]; then
 		kill -9 $upgrade_pid
 	fi
