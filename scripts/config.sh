@@ -23,20 +23,20 @@ config_show()
 config_set_all()
 {
     local chain_name=""
-    read -p "Enter spacex node name (default:spacex-node): " chain_name
+    read -p "Enter spacex script name (default:spacex-script): " chain_name
     chain_name=`echo "$chain_name"`
     if [ x"$chain_name" == x"" ]; then
-        chain_name="spacex-node"
+        chain_name="spacex-script"
     fi
     local tt=$(rand 100000 999999)
     chain_name="$chain_name-$tt"
     sed -i "22c \\  name: \"$chain_name\"" $configfile &>/dev/null
-    log_success "Set spacex node name: '$chain_name' successfully"
+    log_success "Set spacex script name: '$chain_name' successfully"
 
     local mode=""
     while true
     do
-        read -p "Enter spacex node mode from 'isolation/owner/member' (default:isolation): " mode
+        read -p "Enter spacex script mode from 'isolation/owner/member' (default:isolation): " mode
         mode=`echo "$mode"`
         if [ x"$mode" == x"" ]; then
             mode="isolation"
@@ -55,7 +55,7 @@ config_set_all()
         sed -i '10c \\  ipfs: "disable"' $configfile &>/dev/null
         local old_mode=`cat $basedir/etc/mode.conf`
         sed -i 's/'$old_mode'/'$mode'/g' $basedir/etc/mode.conf
-        log_success "Set spacex node mode: '$mode' successfully"
+        log_success "Set spacex script mode: '$mode' successfully"
         log_success "Set configurations successfully"
         config_generate
         return
@@ -64,13 +64,13 @@ config_set_all()
         sed -i '6c \\  storage: "enable"' $configfile &>/dev/null
         sed -i '8c \\  sdatamanager: "'$mode'"' $configfile &>/dev/null
         sed -i '10c \\  ipfs: "enable"' $configfile &>/dev/null
-        log_success "Set spacex node mode: '$mode' successfully"
+        log_success "Set spacex script mode: '$mode' successfully"
     else
         sed -i '4c \\  chain: "full"' $configfile &>/dev/null
         sed -i '6c \\  storage: "enable"' $configfile &>/dev/null
         sed -i '8c \\  sdatamanager: "'$mode'"' $configfile &>/dev/null
         sed -i '10c \\  ipfs: "enable"' $configfile &>/dev/null
-        log_success "Set spacex node mode: '$mode' successfully"
+        log_success "Set spacex script mode: '$mode' successfully"
     fi
 
     local old_mode=`cat $basedir/etc/mode.conf`
