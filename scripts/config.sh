@@ -148,7 +148,7 @@ config_chain_port()
 config_generate()
 {
     log_info "Start generate configurations and docker compose file"
-    local cg_image="spacex/config-generator:latest"
+    local cg_image="mannheimnetwork/config-generator:latest"
 
     if [ ! -f "$configfile" ]; then
         log_err "config.yaml doesn't exists!"
