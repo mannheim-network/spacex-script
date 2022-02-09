@@ -1,6 +1,6 @@
 #!/bin/bash
 
-node_type="testnet"
+node_type="rubik"
 #node_type="1.1.0"
 
 node_version="v1.1.0"
