@@ -76,9 +76,9 @@ download_docker_images()
     res=$(($?|$res))
     docker tag $docker_org/config-generator:$node_type mannheimnetwork/config-generator
 
-#    docker pull $docker_org/spacex:$node_type
-#    res=$(($?|$res))
-#    docker tag $docker_org/spacex:$node_type mannheimnetwork/spacex
+    docker pull $docker_org/spacex:$node_type
+    res=$(($?|$res))
+    docker tag $docker_org/spacex:$node_type mannheimnetwork/spacex
 
     docker pull $docker_org/spacex-api:$node_type
     res=$(($?|$res))
