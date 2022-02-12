@@ -2,9 +2,9 @@
 
 localbasedir=$(cd `dirname $0`;pwd)
 localscriptdir=$localbasedir/scripts
-installdir=/opt/mannheimnetwork/spacex-script
-disksdir=/opt/mannheimnetwork/disks
-datadir=/opt/mannheimnetwork/data
+installdir=/opt/mannheimworld/spacex-script
+disksdir=/opt/mannheimworld/disks
+datadir=/opt/mannheimworld/data
 source $localscriptdir/utils.sh
 
 help()
@@ -74,27 +74,27 @@ download_docker_images()
     local res=0
     docker pull $docker_org/config-generator:$node_type
     res=$(($?|$res))
-    docker tag $docker_org/config-generator:$node_type mannheimnetwork/config-generator
+    docker tag $docker_org/config-generator:$node_type mannheimworld/config-generator
 
     docker pull $docker_org/spacex:$node_type
     res=$(($?|$res))
-    docker tag $docker_org/spacex:$node_type mannheimnetwork/spacex
+    docker tag $docker_org/spacex:$node_type mannheimworld/spacex
 
     docker pull $docker_org/spacex-api:$node_type
     res=$(($?|$res))
-    docker tag $docker_org/spacex-api:$node_type mannheimnetwork/spacex-api
+    docker tag $docker_org/spacex-api:$node_type mannheimworld/spacex-api
 
     docker pull $docker_org/spacex-storage:$node_type
     res=$(($?|$res))
-    docker tag $docker_org/spacex-storage:$node_type mannheimnetwork/spacex-storage
+    docker tag $docker_org/spacex-storage:$node_type mannheimworld/spacex-storage
 
     docker pull $docker_org/spacex-sdatamanager:$node_type
     res=$(($?|$res))
-    docker tag $docker_org/spacex-sdatamanager:$node_type mannheimnetwork/spacex-sdatamanager
+    docker tag $docker_org/spacex-sdatamanager:$node_type mannheimworld/spacex-sdatamanager
 
     docker pull $docker_org/go-ipfs:$node_type
     res=$(($?|$res))
-    docker tag $docker_org/go-ipfs:$node_type mannheimnetwork/go-ipfs
+    docker tag $docker_org/go-ipfs:$node_type mannheimworld/go-ipfs
 
     if [ $res -ne 0 ]; then
         log_err "Install docker failed"
