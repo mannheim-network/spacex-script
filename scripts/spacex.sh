@@ -1,9 +1,9 @@
 #!/bin/bash
 
-source /opt/mannheimnetwork/spacex-script/scripts/utils.sh
-source /opt/mannheimnetwork/spacex-script/scripts/version.sh
-source /opt/mannheimnetwork/spacex-script/scripts/config.sh
-source /opt/mannheimnetwork/spacex-script/scripts/tools.sh
+source /opt/mannheimworld/spacex-script/scripts/utils.sh
+source /opt/mannheimworld/spacex-script/scripts/version.sh
+source /opt/mannheimworld/spacex-script/scripts/config.sh
+source /opt/mannheimworld/spacex-script/scripts/tools.sh
 export EX_STORAGE_ARGS=''
 
 
@@ -346,7 +346,7 @@ start_sdatamanager()
             return 1
         fi
 
-        local upgrade_pid=$(ps -ef | grep "/opt/mannheimnetwork/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
+        local upgrade_pid=$(ps -ef | grep "/opt/mannheimworld/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
         if [ x"$upgrade_pid" != x"" ]; then
             kill -9 $upgrade_pid
         fi
@@ -364,7 +364,7 @@ start_sdatamanager()
 
 stop_sdatamanager()
 {
-    local upgrade_pid=$(ps -ef | grep "/opt/mannheimnetwork/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
+    local upgrade_pid=$(ps -ef | grep "/opt/mannheimworld/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
 
 	if [ x"$upgrade_pid" != x"" ]; then
 		kill -9 $upgrade_pid
@@ -575,7 +575,7 @@ logs()
         docker logs ${array[@]} -f spacex-storage-b
         logs_help_flag=$?
     elif [ x"$name" == x"sdatamanager-upshell" ]; then
-		local upgrade_pid=$(ps -ef | grep "/opt/mannheimnetwork/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
+		local upgrade_pid=$(ps -ef | grep "/opt/mannheimworld/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
 		if [ x"$upgrade_pid" == x"" ]; then
 			log_info "Service spacex sdatamanager upgrade shell is not started now"
 			return 0
@@ -764,7 +764,7 @@ sdatamanager_status()
         sdatamanager_status="exited"
     fi
 
-    local upgrade_pid=$(ps -ef | grep "/opt/mannheimnetwork/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
+    local upgrade_pid=$(ps -ef | grep "/opt/mannheimworld/spacex-script/scripts/auto_sdatamanager.sh" | grep -v grep | awk '{print $2}')
 	if [ x"$upgrade_pid" != x"" ]; then
 		upgrade_shell_status="running->${upgrade_pid}"
 	fi

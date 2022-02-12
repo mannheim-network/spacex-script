@@ -5,7 +5,7 @@ node_type="rubik"
 
 node_version="v1.1.0"
 aliyun_address=""
-basedir=/opt/mannheimnetwork/spacex-script
+basedir=/opt/mannheimworld/spacex-script
 scriptdir=$basedir/scripts
 builddir=$basedir/build
 configfile=$basedir/config.yaml
@@ -39,24 +39,24 @@ function upgrade_docker_image()
         image_tag=$2
     fi
 
-    local old_image=(`docker images | grep '^\b'mannheimnetwork/$image_name'\b ' | grep 'latest'`)
+    local old_image=(`docker images | grep '^\b'mannheimworld/$image_name'\b ' | grep 'latest'`)
     old_image=${old_image[2]}
 
     local region=`cat $basedir/etc/region.conf`
-    local docker_org="mannheimnetwork"
+    local docker_org="mannheimworld"
 
 
     local res=0
     docker pull $docker_org/$image_name:$image_tag
     res=$(($?|$res))
-    docker tag $docker_org/$image_name:$image_tag mannheimnetwork/$image_name
+    docker tag $docker_org/$image_name:$image_tag mannheimworld/$image_name
 
     if [ $res -ne 0 ]; then
         log_err "Download docker image $image_name:$image_tag failed"
         return 1
     fi
 
-    local new_image=(`docker images | grep '^\b'mannheimnetwork/$image_name'\b ' | grep 'latest'`)
+    local new_image=(`docker images | grep '^\b'mannheimworld/$image_name'\b ' | grep 'latest'`)
     new_image=${new_image[2]}
     if [ x"$old_image" = x"$new_image" ]; then
         log_info "The current docker image $image_name ($old_image) is already the latest"

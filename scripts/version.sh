@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /opt/mannheimnetwork/spacex-script/scripts/utils.sh
+source /opt/mannheimworld/spacex-script/scripts/utils.sh
 
 version()
 {
@@ -36,22 +36,22 @@ inner_storage_version()
 
 inner_docker_version()
 {
-    local chain_image=(`docker images | grep '^\b'mannheimnetwork/spacex'\b ' | grep 'latest'`)
+    local chain_image=(`docker images | grep '^\b'mannheimworld/spacex'\b ' | grep 'latest'`)
     chain_image=${chain_image[2]}
 
-    local storage_image=(`docker images | grep '^\b'mannheimnetwork/spacex-storage'\b ' | grep 'latest'`)
+    local storage_image=(`docker images | grep '^\b'mannheimworld/spacex-storage'\b ' | grep 'latest'`)
     storage_image=${storage_image[2]}
 
-    local cgen_image=(`docker images | grep '^\b'mannheimnetwork/config-generator'\b ' | grep 'latest'`)
+    local cgen_image=(`docker images | grep '^\b'mannheimworld/config-generator'\b ' | grep 'latest'`)
     cgen_image=${cgen_image[2]}
 
-    local ipfs_image=(`docker images | grep '^\b'mannheimnetwork/go-ipfs'\b ' | grep 'latest'`)
+    local ipfs_image=(`docker images | grep '^\b'mannheimworld/go-ipfs'\b ' | grep 'latest'`)
     ipfs_image=${ipfs_image[2]}
 
-    local api_image=(`docker images | grep '^\b'mannheimnetwork/spacex-api'\b ' | grep 'latest'`)
+    local api_image=(`docker images | grep '^\b'mannheimworld/spacex-api'\b ' | grep 'latest'`)
     api_image=${api_image[2]}
 
-    local sdatamanager_image=(`docker images | grep '^\b'mannheimnetwork/spacex-sdatamanager'\b ' | grep 'latest'`)
+    local sdatamanager_image=(`docker images | grep '^\b'mannheimworld/spacex-sdatamanager'\b ' | grep 'latest'`)
     sdatamanager_image=${sdatamanager_image[2]}
 
     printf "Docker images:\n"

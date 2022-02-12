@@ -30,14 +30,14 @@ async function genSdatamanagerConfig(config, outputCfg) {
       config: sdatamanagerConfig,
       paths: [{
         required: true,
-        path: '/opt/mannheimnetwork/data/sdatamanager',
+        path: '/opt/mannheimworld/data/sdatamanager',
       }],
     }
   }
   
   async function genSdatamanagerComposeConfig(config) {
     return {
-      image: 'mannheimnetwork/spacex-sdatamanager:latest',
+      image: 'mannheimworld/spacex-sdatamanager:latest',
       network_mode: 'host',
       restart: 'unless-stopped',
       environment: {
@@ -45,7 +45,7 @@ async function genSdatamanagerConfig(config, outputCfg) {
       },
       volumes: [
         './sdatamanager:/config',
-        '/opt/mannheimnetwork/data/sdatamanager:/data'
+        '/opt/mannheimworld/data/sdatamanager:/data'
       ],
       logging: {
         driver: "json-file",

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /opt/mannheimnetwork/spacex-script/scripts/utils.sh
+source /opt/mannheimworld/spacex-script/scripts/utils.sh
 
 config_help()
 {
@@ -148,7 +148,7 @@ config_chain_port()
 config_generate()
 {
     log_info "Start generate configurations and docker compose file"
-    local cg_image="mannheimnetwork/config-generator:latest"
+    local cg_image="mannheimworld/config-generator:latest"
 
     if [ ! -f "$configfile" ]; then
         log_err "config.yaml doesn't exists!"

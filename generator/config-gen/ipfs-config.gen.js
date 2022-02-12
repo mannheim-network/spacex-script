@@ -3,24 +3,24 @@ async function genIpfsConfig(config, outputCfg) {
     swarm_port: 4001,
     api_port: 5001,
     gateway_port: 37773,
-    path: '/opt/mannheimnetwork/data/ipfs'
+    path: '/opt/mannheimworld/data/ipfs'
   }
   return {
     config: ipfsConfig,
     paths: [{
       required: true,
-      path: '/opt/mannheimnetwork/data/ipfs',
+      path: '/opt/mannheimworld/data/ipfs',
     }],
   }
 }
 
 async function genIpfsComposeConfig(config) {
   return {
-    image: 'mannheimnetwork/go-ipfs:latest',
+    image: 'mannheimworld/go-ipfs:latest',
     network_mode: 'host',
     restart: 'always',
     volumes: [
-      '/opt/mannheimnetwork/data/ipfs:/data/ipfs'
+      '/opt/mannheimworld/data/ipfs:/data/ipfs'
     ],
     entrypoint: '/sbin/tini --',
     environment: {
