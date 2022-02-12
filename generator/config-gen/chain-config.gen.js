@@ -15,7 +15,7 @@ async function genChainComposeConfig(config) {
     '--base-path',
     '/opt/mannheimworld/data/chain',
     '--chain',
-    'mainnet',
+    'rubik',
     '--port',
     `${config.chain.port}`,
     '--name',
