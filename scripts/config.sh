@@ -36,17 +36,30 @@ config_set_all()
     local mode=""
     while true
     do
-        read -p "Enter spacex script mode from 'isolation/owner/member' (default:isolation): " mode
+        read -p "Enter spacex script mode from 'bridge/guardian/miner' (default:bridge): " mode
         mode=`echo "$mode"`
         if [ x"$mode" == x"" ]; then
-            mode="isolation"
+            mode="bridge"
             break
-        elif [ x"$mode" == x"isolation" ] || [ x"$mode" == x"owner" ] || [ x"$mode" == x"member" ]; then
+        elif [ x"$mode" == x"bridge" ] || [ x"$mode" == x"guardian" ] || [ x"$mode" == x"miner" ]; then
             break
         else
-            log_err "Input error, please input isolation/owner/member"
+            log_err "Input error, please input bridge/guardian/miner"
         fi
     done
+
+    if [ x"$mode" == x"bridge" ]; then
+        mode="isolation"
+    fi
+
+    if [ x"$mode" == x"guardian" ]; then
+        mode="owner"
+    fi
+
+    if [ x"$mode" == x"miner" ]; then
+        mode="member"
+    fi
+
 
     if [ x"$mode" == x"owner" ]; then
         sed -i '4c \\  chain: "authority"' $configfile &>/dev/null
