@@ -68,7 +68,7 @@ config_set_all()
         sed -i '10c \\  ipfs: "disable"' $configfile &>/dev/null
         local old_mode=`cat $basedir/etc/mode.conf`
         sed -i 's/'$old_mode'/'$mode'/g' $basedir/etc/mode.conf
-        log_success "Set spacex script mode: '$mode' successfully"
+        log_success "Set spacex script mode: guardian successfully"
         log_success "Set configurations successfully"
         config_generate
         return
@@ -77,13 +77,13 @@ config_set_all()
         sed -i '6c \\  storage: "enable"' $configfile &>/dev/null
         sed -i '8c \\  sdatamanager: "'$mode'"' $configfile &>/dev/null
         sed -i '10c \\  ipfs: "enable"' $configfile &>/dev/null
-        log_success "Set spacex script mode: '$mode' successfully"
+        log_success "Set spacex script mode: bridge successfully"
     else
         sed -i '4c \\  chain: "full"' $configfile &>/dev/null
         sed -i '6c \\  storage: "enable"' $configfile &>/dev/null
         sed -i '8c \\  sdatamanager: "'$mode'"' $configfile &>/dev/null
         sed -i '10c \\  ipfs: "enable"' $configfile &>/dev/null
-        log_success "Set spacex script mode: '$mode' successfully"
+        log_success "Set spacex script mode: miner successfully"
     fi
 
     local old_mode=`cat $basedir/etc/mode.conf`
