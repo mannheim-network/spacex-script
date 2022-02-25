@@ -93,9 +93,9 @@ config_set_all()
     while true
     do
         if [ x"$mode" == x"member" ]; then
-            read -p "Enter the backup of member account: " identity_backup
+            read -p "Enter the backup of miner account: " identity_backup
         else
-            read -p "Enter the backup of member account: " identity_backup
+            read -p "Enter the backup of miner account: " identity_backup
         fi
 
         identity_backup=`echo "$identity_backup"`
@@ -112,9 +112,9 @@ config_set_all()
     while true
     do
         if [ x"$mode" == x"member" ]; then
-            read -p "Enter the password of member account: " identity_password
+            read -p "Enter the password of miner account: " identity_password
         else
-            read -p "Enter the password of member account: " identity_password
+            read -p "Enter the password of miner account: " identity_password
         fi
 
         identity_password=`echo "$identity_password"`
