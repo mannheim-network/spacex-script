@@ -17,7 +17,7 @@ EOF
 
 config_show()
 {
-    cat $configfile
+    cat $configfile  | sed 's#isolation#bridge#g' | sed -e 's#owner#guardian#g' | sed -e 's#member#miner#g'
 }
 
 config_set_all()
