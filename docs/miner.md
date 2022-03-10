@@ -14,7 +14,7 @@ The Miner node runs chain modules (not participating in block generation), stora
 
 ### 2.1 Create your Accounts
 
-Refer to [polkadot{.js} extension](https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd) to create a Miner account (a single account). The Miner node account needs to meet the following three requirements:
+Create a Miner account (a single account). The Miner node account needs to meet the following three requirements:
 
 * Ensure Miner account has 2~5 HEIMs as a transaction fee (cannot be locked) for sending work reports. It is recommended you check the remaining status of reserves from time to time;
 * Cannot be the account of Owner;
@@ -76,7 +76,7 @@ Follow the prompts to enter a node mode 'miner', and press Enter to end.
 
 Enter the contents of the Miner's backup file into the terminal, you can follow this: copy the contents of the Miner's backup file generated when the account is created, copy it to the terminal, and enter.
 
-> Note 1: The account of Spacex mainnet starting with the letter 'c'. For example, the value of "address" in the above picture is `cTJFUK...` which is a Spacex mainnet account.
+> Note 1: The account of Mannheim Network Rubik starting with the letter 'r'. For example, the value of "address" in the above picture is `r7H5Wbf...` which is a Mannheim testnet account.
 
 > Note 2: This backup file and its content is the credential of your account, it is very important, please do not disclose or lose it.
 
