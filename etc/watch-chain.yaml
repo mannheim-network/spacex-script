@@ -10,7 +10,7 @@ services:
       - '--base-path'
       - /opt/mannheimworld/data/watchchain
       - '--chain'
-      - mainnet
+      - rubik
       - '--port'
       - '30888'
       - '--name'
