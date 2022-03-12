@@ -1,4 +1,4 @@
-# 🚀Staring node
+# 🚀Getting Started
 Official spacex node service for running Mannheim protocol.
 
 ## 🧰Preparation work
