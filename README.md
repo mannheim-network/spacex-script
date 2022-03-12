@@ -1,7 +1,7 @@
-# Spacex node
+# 🚀Staring node
 Official spacex node service for running Mannheim protocol.
 
-## Preparation work
+## 🧰Preparation work
 - Hardware requirements: 
 
   CPU must contain **SGX module**, and make sure the SGX function is turned on in the bios
@@ -14,7 +14,7 @@ Official spacex node service for running Mannheim protocol.
 
   - **Secure Boot** in BIOS needs to be turned off
 
-## Install dependencies
+## 🛠️Install dependencies
 
 ### Install spacex service
 ```shell
@@ -46,13 +46,13 @@ sudo spacex status
 sudo spacex stop
 ```
 
-### How to become a guardian?
+### 🛡️How to become a guardian?
 
 The Guardian node is the initiator of and in charge of the Group, participating in block generation. Effective storage of the Member can be clustered on the Guardian to participate in the block generation competition. Meantime, the organizers of the Guardian node are accountable for the Group's strategy of receiving meaningful files to improve the Group's overall competitiveness. Since the Guardian node itself does not store files, support for SGX is not necessary. The Guardian node account is connected to block node through the session key. 
 
 For details, please refer to [this page](docs/guardian.md).
 
-### How to become a miner?
+### 💎How to become a miner?
 
 The Miner node acts as the storage provider in Group. There can be multiple Miner nodes in a Group, and their effective storage can be clustered on Owner to participate in block generation competition. Since Miner nodes store files and perform trusted quantification, support for SGX is necessary. The Miner node is connected to its account through configuring backup files.
 
