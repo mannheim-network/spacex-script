@@ -6,7 +6,7 @@ The Guardian node is the initiator of and in charge of the Group, participating 
 
 ## 2. Ready to Deploy
 
-> Note: The account of Spacex mainnet starting with the letter 'c'.
+> Note: The account of Mannheim testnet RUBIK starting with the letter 'r'.
 
 ### 2.1 Create your Accounts
 
@@ -40,11 +40,15 @@ a. Download
 ```plain
 wget https://github.com/mannheim-network/spacex-script/archive/refs/heads/testnet.zip
 ```
+
 b. Unzip
+
 ```plain
 tar -xvf testnet.zip
 ```
+
 c. Go to package directory
+
 ```plain
 cd spacex-script-testnet
 ```
@@ -55,7 +59,7 @@ Notice:
 
 * The program will be installed under /opt/mannheimworld, please make sure this path is mounted with more than 250G of SSD space;
 
-* If you have run a previous Spacex testnet program on this device, you need to close the previous Spacex Node and clear the data before this installation. For details, please refer to section 6.2;
+* If you have run a previous Mannheim testnet program on this device, you need to close the previous Spacex Node and clear the data before this installation. 
 
 * The installation process will involve the download of dependencies and docker images, which is time-consuming. Meantime, it may fail due to network problems. If it happens, please repeat the process until the installation is all complete.
 
@@ -64,6 +68,7 @@ Installation:
 ```plain
 sudo ./install.sh
 ```
+
 ## 3. Node Configuration
 
 ### 3.1 Edit Config File
@@ -73,6 +78,7 @@ Execute the following command to edit the node configuration file:
 ```plain
 sudo spacex config set
 ```
+
 ### 3.2 Change Node Name
 
 Follow the prompts to enter the name of your node, and press Enter to end.
@@ -88,6 +94,7 @@ Execute following command to view the configuration file:
 ```plain
 sudo spacex config show
 ```
+
 ## 4. Start Node
 
 ### 4.1 Preparation
@@ -99,16 +106,19 @@ Then open the P2P port:
 ```plain
 sudo ufw allow 30888
 ```
+
 ### 4.2 Start
 
 ```plain
 sudo spacex start 
 ```
+
 ### 4.3 Check Running Status
 
 ```plain
 sudo spacex logs chain
 ```
+
 As detailed below, all is ready for synchronizing blocks. 
 
 ## 5. Blockchain Validate
@@ -120,6 +130,7 @@ Please wait for the chain to synchronize to the latest block height, and execute
 ```plain
 sudo spacex tools rotate-keys
 ```
+
 Copy the session key as shown below:
 
 ### 5.2  Set session key
@@ -146,9 +157,10 @@ If the device or Spacex node related programs need to be somehow restarted, plea
 ```plain
 sudo spacex reload
 ```
+
 ### 6.2 Uninstall and Data Cleanup
 
-If you have run a previous version of Spacex test chain, or if you want to redeploy your current node, you need to clear data from three sources:
+If you have run a previous version of Mannheim test chain, or if you want to redeploy your current node, you need to clear data from three sources:
 
 * Delete basic Spacex files under /opt/mannheimworld/data
 * Clean node data under /opt/mannheimworld/spacex-script by executing:
