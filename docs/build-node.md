@@ -5,16 +5,16 @@ The use of an external chain can make the miner node more lightweight, and it ca
 
 ### 1.1 Configure watch chain service
 
-a Machine selection
+1. Machine selection
 
 The requirements of the Watch machine are as follows:
 - The machine running the watch does not require SGX
 - 500GB solid state drive
 - It is recommended to use a stable network with public IP and fixed ports, which will directly affect the workload report of miner nodes
-- Install Spacex node
+- Install node
 - Recommend cloud server
 
-b Generate docker compose file
+2. Generate docker compose file
 
 ```shell
 sudo spacex tools watch-chain
@@ -22,7 +22,7 @@ sudo spacex tools watch-chain
 
 Generate a "watch-chain.yaml" configuration file in the current directory
 
-c Start watch chain
+3. Start watch chain
 
 Start:
 ```shell
@@ -34,7 +34,7 @@ Monitor:
 sudo docker logs spacex-watch
 ```
 
-d Matters needing attention
+4. Matters needing attention
 
 - You can edit the "watch-chain.yaml" file to customize the watcher node
 - The watcher node can provide ws and rpc services, the default port is 30888, 19933, 19944, pay attention to open ports
