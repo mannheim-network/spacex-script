@@ -1,22 +1,27 @@
+<p align="center">
+  <a>
+    <img src="https://ipfs.io/ipfs/QmXHwxSJEMhdDR1UFtkEiUM9bv3Wd731FjhTVKjN2SY19V?filename=spacex_icon.png" alt="Mannheim"/ width="30%" height="30%">
+  </a>
+</p>
+
+<h1 align="center">RUBIK</h1>
+
 # 🚀Getting Started
-Official spacex node service for running Mannheim protocol.
+Official Guardian/Miner Node service for running Mannheim protocol.
 
 ## 🧰Preparation work
-- Hardware requirements: 
 
-  CPU must contain **SGX module**, and make sure the SGX function is turned on in the bios
+| Requirements          |                                                              |
+| --------------------- | ------------------------------------------------------------ |
+| ⚙️Hardware             | CPU must contain **SGX module**, and make sure the SGX function is turned on in the bios |
+| ⚙️Operating system     | Ubuntu 16.04/18.04/20.04                                     |
+| ⚙️Other configurations | **Secure Boot** in BIOS needs to be turned off               |
 
-- Operating system requirements:
 
-  Ubuntu 16.04/18.04/20.04
-  
-- Other configurations
-
-  - **Secure Boot** in BIOS needs to be turned off
 
 ## 🛠️Install dependencies
 
-### Install spacex service
+### Install Rubik service
 ```shell
 sudo ./install.sh # Use 'sudo ./install.sh --registry cn' to accelerate installation in some areas
 ```
@@ -29,9 +34,9 @@ sudo spacex config set
 ### Run service
 
 - Please make sure the following ports are not occupied before starting：
-  - 30888 19933 19944 (for spacex chain)
-  - 56666 (for spacex API)
-  - 12222 (for spacex storage)
+  - 30888 19933 19944 (for chain )
+  - 56666 (for rubik API)
+  - 12222 (for rubik storage)
   - 5001 4001 37773 (for IPFS)
 
 ```shell
@@ -48,7 +53,7 @@ sudo spacex stop
 
 ### 🛡️How to become a guardian?
 
-The Guardian node is the initiator of and in charge of the Group, participating in block generation. Effective storage of the Member can be clustered on the Guardian to participate in the block generation competition. Meantime, the organizers of the Guardian node are accountable for the Group's strategy of receiving meaningful files to improve the Group's overall competitiveness. Since the Guardian node itself does not store files, support for SGX is not necessary. The Guardian node account is connected to block node through the session key. 
+The Guardian node is the initiator of and in charge of the Group, participating in block generation. Effective storage of the miner can be clustered on the Guardian to participate in the block generation competition. Meantime, the organizers of the Guardians are accountable for the Group's strategy of receiving meaningful files to improve the Group's overall competitiveness. Since the Guardian node itself does not store files, support for SGX is not necessary. 
 
 For details, please refer to [this page](docs/guardian.md).
 
