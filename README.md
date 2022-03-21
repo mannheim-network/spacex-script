@@ -4,9 +4,13 @@
   </a>
 </p>
 
+
 <h1 align="center">RUBIK</h1>
 
+The repo of spacex-script used to automate processes to configure and run Mannheim testnet **RUBIK**, the script is a list of commands that are executed by spacex program.
+
 # 🚀Getting Started
+
 Official Guardian/Miner Node service for running Mannheim protocol.
 
 ## 🧰Preparation work
@@ -22,11 +26,13 @@ Official Guardian/Miner Node service for running Mannheim protocol.
 ## 🛠️Install dependencies
 
 ### Install Rubik service
+
 ```shell
 sudo ./install.sh # Use 'sudo ./install.sh --registry cn' to accelerate installation in some areas
 ```
 
 ### Modify config.yaml
+
 ```shell
 sudo spacex config set
 ```
