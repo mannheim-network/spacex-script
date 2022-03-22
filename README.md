@@ -5,6 +5,7 @@
 </p>
 
 <h1 align="center">RUBIK</h1>
+
 The repo of spacex-script used to automate processes to configure and run Mannheim testnet **RUBIK**, the script is a list of commands that are executed by spacex program.
 
 # 🚀Getting Started
