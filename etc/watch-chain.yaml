@@ -31,7 +31,7 @@ services:
       - '--pruning'
       - '8000'
       - '--ws-max-connections'
-      - '500'
+      - '50000'
       - '--ws-external'
       - '--rpc-external'
       - '--rpc-cors'
